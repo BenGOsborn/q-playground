@@ -1,23 +1,20 @@
 from qiskit import QuantumCircuit, Aer, execute
+from enum import Enum
+from typing import List
 
 # **** I need a comparison circuit
 # **** I also need an equals circuit
 
+# **** So we will have it such that each node will correspond to ONE operation
 
-def adder_circuit(circuit: QuantumCircuit):
-    # https://www.youtube.com/results?search_query=make+an+adder+circuit
-    pass
+# **** It needs to list the nodes that were used to build it, and then we can calculate its operations using those bits from inputs
+# **** We will have it such that each output from a previous node corresponds to an input as another node
+# **** At the end, we can build the circuit by looking at each node and figuring out where it goes to
+# **** This means for each observation, we must record that observation within our circuit builder and use it as our back propogation
 
-
-def or_circuit(circuit: QuantumCircuit, in_bit1: int, in_bit2: int, out_bit: int):
-    circuit.x(in_bit1)
-    circuit.x(in_bit2)
-    circuit.ccx(in_bit1, in_bit2, out_bit)
-    circuit.x(out_bit)
-
-
-def and_circuit(circuit: QuantumCircuit, in_bit1: int, in_bit2: int, out_bit: int):
-    circuit.ccx(in_bit1, in_bit2, out_bit)
+# **** We currently need a way of running input nodes - this can probably just be done using hadamards - but how do we model these hadamards ?
+# **** All of the last outputs will be recorded as a measurement node
+# **** We will build the graph from the bottom up using a postfix search
 
 
 def build_circuit():
