@@ -69,8 +69,8 @@ def build(root: CircuitNode) -> QuantumCircuit:
         for child in node.children:
             stack.append(child)
 
-    # Build the circuit
-    circuit = QuantumCircuit(total_size, total_inputs)
+    # Build the circuit - measurements are not considered as a part of the circuits size - we need to artifically add the amount of measurements
+    circuit = QuantumCircuit(total_size + total_inputs, total_inputs)
 
     stack = [root]
     seen = defaultdict(bool)
@@ -123,7 +123,13 @@ def build(root: CircuitNode) -> QuantumCircuit:
                     counter + 1,
                     counter + 2
                 )
-                elem.out = counter
+                elem.out = counter + 2
+
+            elif elem.c_type == CircuitType.MEASURE:
+                for j, i in enumerate(input_index):
+                    q_and(circuit, i, elem.children[0].out, counter)
+                    q_measure(circuit, counter, total_inputs - j - 1)
+                    counter += 1
 
             counter += OP_SPAN[elem.c_type]
 

@@ -1,6 +1,8 @@
 from qiskit import QuantumCircuit
 
 # The more circuits we define here instead of using abstraction results in more efficient circuits
+# Note that all operations need to be read only for the state - to write to a variable, it must first be copied then mutated using the c not gate
+
 # TODO make an abstraction for this that is independent of 'QuantumCircuit' for other implementations
 
 
