@@ -128,7 +128,7 @@ def build(root: CircuitNode) -> QuantumCircuit:
             elif elem.c_type == CircuitType.MEASURE:
                 for j, i in enumerate(input_index):
                     q_and(circuit, i, elem.children[0].out, counter)
-                    q_measure(circuit, counter, total_inputs - j - 1)
+                    q_measure(circuit, counter, j)
                     counter += 1
 
             counter += OP_SPAN[elem.c_type]
