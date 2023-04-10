@@ -61,10 +61,6 @@ def build(outputs: List["CircuitNode"]) -> QuantumCircuit:
     # **** We can figure out the number of inputs required by calculating the number of leaf nodes - in this case every leaf will correspond to a new hadamard
     # **** So the count inputs actually comes from the entire circuit - we just apply hadamards to the specific input values (which we see when we see)
 
-    # circuit = QuantumCircuit(num_inputs, len(outputs))
-
-    # return circuit
-
     # **** So the first thing we will do is loop through each of the outputs, then check where the output ends up at based on the current offset and the op size
 
     stack = outputs.copy()
@@ -84,9 +80,13 @@ def build(outputs: List["CircuitNode"]) -> QuantumCircuit:
         for child in node.children:
             stack.append(child)
 
-    print(total_size)
+    # **** It is important to note that we cannot just write the outputs here randomly - we need to process the other nodes sequentially from the bottom up, then make our way to the end.
+    # Then at the end, we will write the measure output
 
-    pass
+    circuit = QuantumCircuit(total_size, len(outputs))
+    print(circuit)
+
+    return circuit
 
 
 if __name__ == "__main__":
