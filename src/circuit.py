@@ -1,4 +1,5 @@
 from qiskit import QuantumCircuit
+from collections import defaultdict
 from typing import List
 from src.circuit_node import CircuitNode, CircuitType, OP_SPAN
 
@@ -56,6 +57,8 @@ def print_circuit(outputs: List["CircuitNode"]):
 
 
 # Build the circuit from a valid circuit and the number of inputs
+
+
 def build(outputs: List["CircuitNode"]) -> QuantumCircuit:
     # **** These numbers will be built by first assembling the graph, calling the operation on them, and then figuring out the number of inputs and outputs
     # **** We can figure out the number of inputs required by calculating the number of leaf nodes - in this case every leaf will correspond to a new hadamard
@@ -83,8 +86,35 @@ def build(outputs: List["CircuitNode"]) -> QuantumCircuit:
     # **** It is important to note that we cannot just write the outputs here randomly - we need to process the other nodes sequentially from the bottom up, then make our way to the end.
     # Then at the end, we will write the measure output
 
+    # **** We also need to make sure there is some way of interpolating the result that comes out of the computation
+    # **** This is going to be difficult to evaluate given this system - we might need state tuples
+
     circuit = QuantumCircuit(total_size, len(outputs))
     print(circuit)
+
+    stack = outputs.clone()
+    seen = defaultdict(int)
+    counter = 0
+
+    # **** Instead of having seen map to true, we will figure out where it needs to go
+
+    while len(stack):
+        elem = stack.pop()
+
+        if elem.out is None:
+            for child in elem.children:
+                pass
+
+            # **** Now we need to get the value for the previous elem and evaluate it ???
+            # elem.out =
+
+            # Process the children of the current node
+            pass
+        else:
+            # Process the current node
+            pass
+
+        # **** Now for this we look at the operation and perform the value on it (but only after it has been completed - thus, we need to check what state we are in)
 
     return circuit
 
