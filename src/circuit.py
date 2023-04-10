@@ -92,15 +92,38 @@ def build(root: CircuitNode) -> QuantumCircuit:
         elif elem.out is None:
             # Perform the vector operation
             if elem.c_type == CircuitType.INPUT:
-                input_index.append(counter)
                 q_hadamard(circuit, counter)
                 elem.out = counter
 
+                input_index.append(counter)
+
             elif elem.c_type == CircuitType.NOT:
-                q_not(circuit, elem.children[0].out)
+                q_not(
+                    circuit,
+                    elem.children[0].out,
+                    counter
+                )
                 elem.out = counter
 
-            # **** Up to this - use a switch instead
+            elif elem.c_type == CircuitType.AND:
+                q_and(
+                    circuit,
+                    elem.children[0].out,
+                    elem.children[1].out,
+                    counter
+                )
+                elem.out = counter
+
+            elif elem.c_type == CircuitType.OR:
+                q_or(
+                    circuit,
+                    elem.children[0].out,
+                    elem.children[1].out,
+                    counter,
+                    counter + 1,
+                    counter + 2
+                )
+                elem.out = counter
 
             counter += OP_SPAN[elem.c_type]
 

@@ -14,9 +14,9 @@ class CircuitType(Enum):
 OP_SPAN = {
     CircuitType.MEASURE: 0,
     CircuitType.INPUT: 1,
-    CircuitType.OR: 1,
+    CircuitType.OR: 3,
     CircuitType.AND: 1,
-    CircuitType.NOT: 0
+    CircuitType.NOT: 1
 }
 
 
