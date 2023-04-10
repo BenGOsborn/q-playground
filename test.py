@@ -8,5 +8,4 @@ if __name__ == "__main__":
     assert is_valid, "Invalid circuit"
 
     print_circuit([circuit])
-    leaves = count_inputs([circuit])
-    print(leaves)
+    build([circuit])

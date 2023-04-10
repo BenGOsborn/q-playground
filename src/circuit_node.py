@@ -10,6 +10,16 @@ class CircuitType(Enum):
     NOT = "not"
 
 
+# Derived using the q_operator span
+OP_SPAN = {
+    CircuitType.MEASURE: 1,
+    CircuitType.INPUT: 1,
+    CircuitType.OR: 3,
+    CircuitType.AND: 3,
+    CircuitType.NOT: 1
+}
+
+
 class CircuitNode:
     def __init__(self, children: List["CircuitNode"] = [], c_type: CircuitType = CircuitType.INPUT) -> "CircuitNode":
         self.children = children
