@@ -10,13 +10,13 @@ class CircuitType(Enum):
     NOT = "not"
 
 
-# Derived using the q_operator span
+# Derived using the q_operator span - how many extra bits does this operation add
 OP_SPAN = {
-    CircuitType.MEASURE: 1,
+    CircuitType.MEASURE: 0,
     CircuitType.INPUT: 1,
-    CircuitType.OR: 3,
-    CircuitType.AND: 3,
-    CircuitType.NOT: 1
+    CircuitType.OR: 1,
+    CircuitType.AND: 1,
+    CircuitType.NOT: 0
 }
 
 
