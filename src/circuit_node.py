@@ -7,31 +7,26 @@ class CircuitType(Enum):
     INPUT = "input"
     OR = "or"
     AND = "and"
+    NOT = "not"
 
 
 class CircuitNode:
-    def __init__(self, prev: List["CircuitNode"]) -> "CircuitNode":
-        self.prev = prev
-        self.type = CircuitType.INPUT
+    def __init__(self, children: List["CircuitNode"] = [], c_type: CircuitType = CircuitType.INPUT) -> "CircuitNode":
+        self.children = children
+        self.c_type = c_type
         self.out = None  # The output bit of the node
 
     def and_(self, node: "CircuitNode") -> "CircuitNode":
-        temp = CircuitNode([self, node])
-        temp.type = CircuitType.AND
-
-        return temp
+        return CircuitNode([self, node], CircuitType.AND)
 
     def or_(self, node: "CircuitNode") -> "CircuitNode":
-        temp = CircuitNode([self, node])
-        temp.type = CircuitType.OR
+        return CircuitNode([self, node], CircuitType.OR)
 
-        return temp
+    def not_(self):
+        return CircuitNode([self], CircuitType.NOT)
 
     def measure_(self):
-        temp = CircuitNode([self])
-        temp.type = CircuitType.MEASURE
-
-        return temp
+        return CircuitNode([self], CircuitType.MEASURE)
 
     def __str__(self) -> str:
-        return str(self.type)
+        return str(self.c_type)

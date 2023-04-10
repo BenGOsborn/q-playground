@@ -1,9 +1,12 @@
 from src.circuit import *
-from src.circuit_node import CircuitNode
+from src.circuit_node import CircuitNode, CircuitType
 
 if __name__ == "__main__":
-    out = CircuitNode([]).and_(CircuitNode([])).or_(CircuitNode([])).measure_()
+    circuit = CircuitNode().and_(CircuitNode()).or_(CircuitNode()).measure_()
 
-    print_circuit([out])
+    is_valid = is_valid_circuit([circuit])
+    assert is_valid, "Invalid circuit"
 
-    pass
+    print_circuit([circuit])
+    leaves = count_inputs([circuit])
+    print(leaves)
